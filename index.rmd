@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Synopsis
 
-In this project, I uploaded the country gross domestic product for 2017 data set from the world bank website and I use R library called plotly to make world map shows each country with  GDP.
+In this project, I uploaded the country gross domestic product for 2017 data set from the world bank website and I used plotly R package to make world map shows each country with  GDP.
 
 
 ## Loading and processing the raw data
