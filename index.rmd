@@ -1,0 +1,67 @@
+---
+title: "Gross Domestic Product"
+author: "Selmane Fouad"
+date: "September 14, 2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Synopsis
+
+In this project, I uploaded the country gross domestic product for 2017 data set from the world bank website and I use R library called plotly to make world map shows each country with  GDP.
+
+
+## Loading and processing the raw data
+
+You can download the data from the world bank website <https://data.worldbank.org/data-catalog/GDP-ranking-table> .
+
+
+
+```{r cars, message=FALSE, warning=FALSE}
+library(plotly)
+library(tidyr)
+gdp<- read.csv("GDP.csv")
+```
+
+Here’s I include only the data I need for this project.
+
+
+```{r}
+gdp_country<- gdp[6:200,- c(2,3,6)]
+colnames(gdp_country)<- c("Abr", "Country","GDP")
+
+```
+
+Let's change the GDP variable from factor to numeric.
+
+```{r}
+
+gdp_country$GDP <- as.character(gdp_country$GDP)
+gdp_country$GDP<-gsub(",","",gdp_country$GDP)
+gdp_country$GDP <- as.numeric(gdp_country$GDP)
+
+```
+
+Create hover text.
+
+```{r}
+gdp_country$hover <- paste(gdp_country$Country,'<br>',"GDP :",gdp_country$GDP)
+
+```
+ 
+After preparing the data now we can use plotly choropleth map to shows the country GDP.
+
+
+````{r, message=FALSE, warning=FALSE}
+
+plot_geo(data = gdp_country)%>% 
+  add_trace(z= ~GDP,color= gdp_country$GDP,locations= ~Abr, text= gdp_country$hover)%>%
+  layout(title ="Gross Domestic Product 2017")
+
+
+
+```
+
